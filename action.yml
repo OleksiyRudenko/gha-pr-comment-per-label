@@ -32,7 +32,7 @@ runs:
   using: "composite"
   # if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
   steps:
-    - if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
+    # - if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
     # runs-on: ubuntu-latest
     # steps:
     # if repo=='' then set to ${{ github.repository }}
@@ -42,6 +42,8 @@ runs:
     # use file to post a comment
     #
     #
+    - name: Check if added label is eligible
+      if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
     - run: echo "inputs ${{inputs.labels}}; ${{inputs.source_repo}}; ${{inputs.source_token}}; ${{inputs.source_path}}; ${{inputs.file_ext}};"
       shell: bash
     - run: echo "github.repository is ${{ github.repository }}; target repo is ${{ github.event.pull_request.base.repo.full_name }}"
