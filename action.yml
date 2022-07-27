@@ -50,8 +50,11 @@ runs:
       shell: bash
     - run: echo "github.repository is ${{ github.repository }}; target repo is ${{ github.event.pull_request.base.repo.full_name }}"
       shell: bash
+    - name: List files
+      run: ls -a
+      shell: bash
     - name: Cat the file
-      run: cat ${{inputs.source_path}}/${{github.event.label.name}}${{inputs.file_ext}}
+      run: cat ${{inputs.source_path}}${{github.event.label.name}}${{inputs.file_ext}}
       shell: bash
 
       # - uses: actions/checkout@v3
