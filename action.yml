@@ -48,14 +48,19 @@ runs:
       if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
     - run: echo "inputs ${{inputs.labels}}; ${{inputs.source_repo}}; ${{inputs.source_token}}; ${{inputs.source_path}}; ${{inputs.file_ext}};"
       shell: bash
-    - run: echo "github.repository is ${{ github.repository }}; target repo is ${{ github.event.pull_request.base.repo.full_name }}"
+    - run: echo "github.repository is ${{ github.repository }}; target repo is ${{ github.event.pull_request.base.repo.full_name }}; target branch ${{ github.event.pull_request.base.ref }}"
       shell: bash
+    - name: Pull target
+      uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
     - name: List files
       run: ls -a
       shell: bash
     - name: Cat the file
       run: cat ${{inputs.source_path}}${{github.event.label.name}}${{inputs.file_ext}}
       shell: bash
+
 
       # - uses: actions/checkout@v3
         # with:
