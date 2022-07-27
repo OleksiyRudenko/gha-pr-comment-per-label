@@ -62,10 +62,10 @@ runs:
       shell: bash
     - name: POst a comment
       uses: oleksiyrudenko/pr-comment@v1.1
-        env:
-          GITHUB_TOKEN: ${{ inputs.token }}
-        with:
-          path: ${{inputs.source_path}}${{github.event.label.name}}${{inputs.file_ext}}
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+      with:
+        path: ${{inputs.source_path}}${{github.event.label.name}}${{inputs.file_ext}}
 
 
       # - uses: actions/checkout@v3
