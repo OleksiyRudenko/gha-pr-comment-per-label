@@ -43,7 +43,8 @@ runs:
     #
     #
     - name: Check if added label is eligible
-      run: echo "Check if added label is eligible ${{ contains( fromJson(${{ inputs.labels }}), github.event.label.name ) }}"
+      run: echo "Check if added label is eligible ${{ contains( fromJson( inputs.labels ), github.event.label.name ) }}"
+      shell: bash
       if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
     - run: echo "inputs ${{inputs.labels}}; ${{inputs.source_repo}}; ${{inputs.source_token}}; ${{inputs.source_path}}; ${{inputs.file_ext}};"
       shell: bash
