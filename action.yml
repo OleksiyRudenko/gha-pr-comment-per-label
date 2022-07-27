@@ -30,9 +30,9 @@ inputs:
     required: true
 runs:
   using: "composite"
-  if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
+  # if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
   steps:
-    # if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
+    - if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
     # runs-on: ubuntu-latest
     # steps:
     # if repo=='' then set to ${{ github.repository }}
