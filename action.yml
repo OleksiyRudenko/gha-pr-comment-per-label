@@ -1,0 +1,69 @@
+---
+name: 'Autoadd a comment to the PR'
+description: 'Add comment to the PR based on labels assigned'
+author: 'OleksiyRudenko'
+branding:
+  icon: 'list'
+  color: 'blue'
+inputs:
+  labels:
+    description: 'An array of action triggering labels (stringified JSON, required)'
+    required: true
+  source_repo:
+    description: 'Repository holding source files; defaults to PR origin (defaults to PR target repo)'
+    required: false
+    default: 'target'
+  source_token:
+    description: 'A token required when source files are pulled from an unrelated repo'
+    required: false
+    default: ''
+  source_path:
+    description: 'Path to messages source files'
+    required: false
+    default: '.github/pr-messages/'
+  file_ext:
+    description: 'Message file extension'
+    required: false
+    default: '.md' 
+  token:
+    description: 'GitHub Token'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
+    runs-on: ubuntu-latest
+    steps:
+    # if repo=='' then set to ${{ github.repository }}
+    # if repo=='target' then set to ${{ github.event.pull_request.base.repo.full_name }}
+    # if source_token=='' then set to ${{inputs.token}}
+    # checkout specific files under $GITHUB_WORKSPACE/....
+    # use file to post a comment
+    #
+    #
+      - run: echo "inputs ${{inputs.labels}}; ${{inputs.source_repo}}; ${{inputs.source_token}}; ${{inputs.source_path}}; ${{inputs.file_ext}};"
+      shell: bash
+      - run: echo "github.repository is ${{ github.repository }}; target repo is ${{ github.event.pull_request.base.repo.full_name }}"
+      shell: bash
+
+      # - uses: actions/checkout@v3
+        # with:
+          # repository: 
+          # ref:
+          # token:
+          
+      # use https://github.com/actions/github-script to use GtiHub Action API methods immediately in the workflow
+      # - uses: oleksiyrudenko/pr-comment@v1.1
+        # env:
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # with:
+          # path: ${{steps.downloads.outputs.download-path}}/${{ github.event.label.name }}.md
+    # - run: echo Hello ${{ inputs.who-to-greet }}.
+      # shell: bash
+    # - id: random-number-generator
+      # run: echo "::set-output name=random-number::$(echo $RANDOM)"
+      # shell: bash
+    # - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
+      # shell: bash          
+    # - run: goodbye.sh
+      # shell: bash      
