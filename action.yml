@@ -30,10 +30,11 @@ inputs:
     required: true
 runs:
   using: "composite"
+  if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
   steps:
-    if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
+    # if: contains( fromJson(${{ inputs.labels }}), github.event.label.name )
     # runs-on: ubuntu-latest
-    steps:
+    # steps:
     # if repo=='' then set to ${{ github.repository }}
     # if repo=='target' then set to ${{ github.event.pull_request.base.repo.full_name }}
     # if source_token=='' then set to ${{inputs.token}}
@@ -41,9 +42,9 @@ runs:
     # use file to post a comment
     #
     #
-      - run: echo "inputs ${{inputs.labels}}; ${{inputs.source_repo}}; ${{inputs.source_token}}; ${{inputs.source_path}}; ${{inputs.file_ext}};"
+    - run: echo "inputs ${{inputs.labels}}; ${{inputs.source_repo}}; ${{inputs.source_token}}; ${{inputs.source_path}}; ${{inputs.file_ext}};"
       shell: bash
-      - run: echo "github.repository is ${{ github.repository }}; target repo is ${{ github.event.pull_request.base.repo.full_name }}"
+    - run: echo "github.repository is ${{ github.repository }}; target repo is ${{ github.event.pull_request.base.repo.full_name }}"
       shell: bash
 
       # - uses: actions/checkout@v3
