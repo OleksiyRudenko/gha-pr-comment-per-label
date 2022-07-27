@@ -10,9 +10,9 @@ inputs:
     description: 'An array of action triggering labels (stringified JSON, required)'
     required: true
   source_repo:
-    description: 'Repository holding source files; defaults to PR origin (defaults to PR target repo)'
+    description: 'Repository holding source files; defaults to PR target repo'
     required: false
-    default: 'target'
+    default: ''
   source_token:
     description: 'A token required when source files are pulled from an unrelated repo'
     required: false
@@ -49,6 +49,9 @@ runs:
     - run: echo "inputs ${{inputs.labels}}; ${{inputs.source_repo}}; ${{inputs.source_token}}; ${{inputs.source_path}}; ${{inputs.file_ext}};"
       shell: bash
     - run: echo "github.repository is ${{ github.repository }}; target repo is ${{ github.event.pull_request.base.repo.full_name }}"
+      shell: bash
+    - name: Cat the file
+      run: cat ${{inputs.source_path}}/${{github.event.label.name}}${{inputs.file_ext}}
       shell: bash
 
       # - uses: actions/checkout@v3
