@@ -43,7 +43,7 @@ runs:
     #
     #
     - name: Added label
-      run: echo "Label: ${{ github.event.label.name }}"
+      run: echo "Label is ${{ github.event.label.name }}"
       shell: bash
     - name: Check if added label is eligible
       run: echo "Check if added label is eligible ${{ contains( fromJson( inputs.labels ), github.event.label.name ) }}"
